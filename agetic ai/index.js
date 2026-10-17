@@ -11,24 +11,20 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/ai", async (req, res) => {
+//
+const main = async () => {
     try {
-        const response = await ai.models.generateContentStream({
+        const response = await ai.models.generateContent({
             model: "gemini-3.8-flash",
             contents: "hello",
         });
-        let fullResponse = "";
-        for await (const chunk of response) {
-            if (chunk.text) {
-                fullResponse += chunk.text;
-            }
-        }
-        res.send(fullResponse);
+        console.log(response.text);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Error generating content");
     }
-});
+}
+
+main();
 
 app.listen(port, () => { // to run server use the listen function 
   console.log(`server strated in port ${port}`);
